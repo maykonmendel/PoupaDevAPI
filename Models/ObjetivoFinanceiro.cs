@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PoupaDevAPI.Entities
+namespace PoupaDevAPI.Models
 {
     public class ObjetivoFinanceiro
     {
