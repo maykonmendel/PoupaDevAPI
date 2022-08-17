@@ -12,14 +12,16 @@ namespace PoupaDevAPI.Models
         public string? Descricao { get; private set; }
         public decimal? ValorObjetivo { get; private set; }
         public DateTime DataCriacao { get; private set; }
+        public int OperacaoFinanceiraId { get; private set; }
+        public List<OperacaoFinanceira> Operacoes { get; private set; }
 
         public ObjetivoFinanceiro(string? titulo, string? descricao, decimal? valorObjetivo)
-        {
-            Id = new Random().Next(0, 1000);
+        {            
             Titulo = titulo;
             Descricao = descricao;
             ValorObjetivo = valorObjetivo;
             DataCriacao = DateTime.Now;
+            Operacoes = new List<OperacaoFinanceira>();
         }
     }
 }
