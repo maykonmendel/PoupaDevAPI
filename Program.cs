@@ -22,8 +22,25 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options => 
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "PoupaDevAPI");
+        options.RoutePrefix = string.Empty;
+    });
 }
+
+void UpdateDatabase(IApplicationBuilder app)
+{
+    using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+    {
+        using (var context = serviceScope.ServiceProvider.GetService<PoupaDevAPIContext>())
+        {
+            context.Database.Migrate();
+        }
+    }
+}
+
+UpdateDatabase(app);
 
 app.UseHttpsRedirection();
 
@@ -32,3 +49,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+
