@@ -9,8 +9,8 @@ var connectionString = builder.Configuration.GetConnectionString("PoupaDevApiCon
 // Add services to the container.
 
 builder.Services.AddDbContext<PoupaDevAPIContext>(o => o.UseSqlServer(connectionString));
-builder.Services.AddScoped<IObjetivoFinanceiroRepository, ObjetivoFinanceiroRepository>();
-builder.Services.AddScoped<IOperacaoFinanceira, OperacaoFinanceiraRepository>();
+builder.Services.AddScoped<ObjetivoFinanceiroRepository>();
+builder.Services.AddScoped<OperacaoFinanceiraRepository>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

@@ -8,7 +8,7 @@ using PoupaDevAPI.Context;
 
 #nullable disable
 
-namespace PoupaDevAPI.Context.Migrations
+namespace PoupaDevAPI.Migrations
 {
     [DbContext(typeof(PoupaDevAPIContext))]
     partial class PoupaDevAPIContextModelSnapshot : ModelSnapshot
@@ -36,9 +36,6 @@ namespace PoupaDevAPI.Context.Migrations
                     b.Property<string>("Descricao")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OperacaoFinanceiraId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Titulo")
                         .HasColumnType("nvarchar(max)");
 
@@ -53,10 +50,16 @@ namespace PoupaDevAPI.Context.Migrations
             modelBuilder.Entity("PoupaDevAPI.Models.OperacaoFinanceira", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime>("DataOperacao")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("ObjetivoFinanceiroId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Tipo")
                         .HasColumnType("int");
@@ -66,21 +69,23 @@ namespace PoupaDevAPI.Context.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ObjetivoFinanceiroId");
+
                     b.ToTable("OperacoesFinanceiras");
                 });
 
             modelBuilder.Entity("PoupaDevAPI.Models.OperacaoFinanceira", b =>
                 {
                     b.HasOne("PoupaDevAPI.Models.ObjetivoFinanceiro", null)
-                        .WithMany("Operacoes")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .WithMany("ListaOperacoes")
+                        .HasForeignKey("ObjetivoFinanceiroId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("PoupaDevAPI.Models.ObjetivoFinanceiro", b =>
                 {
-                    b.Navigation("Operacoes");
+                    b.Navigation("ListaOperacoes");
                 });
 #pragma warning restore 612, 618
         }

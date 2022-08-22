@@ -12,14 +12,6 @@ namespace PoupaDevAPI.Context
         public PoupaDevAPIContext(DbContextOptions<PoupaDevAPIContext> options) : base(options){}
 
         public DbSet<ObjetivoFinanceiro> ObjetivosFinanceiros { get; set; }
-        public DbSet<OperacaoFinanceira> OperacoesFinanceiras { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            builder.Entity<ObjetivoFinanceiro>(e =>
-            {
-                e.HasMany(p => p.Operacoes).WithOne().HasForeignKey(p => p.Id).OnDelete(DeleteBehavior.Restrict);
-            });
-        }
+        public DbSet<OperacaoFinanceira> OperacoesFinanceiras { get; set; }        
     }
 }

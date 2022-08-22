@@ -8,7 +8,7 @@ using PoupaDevAPI.Models;
 
 namespace PoupaDevAPI.Repositories
 {
-    public class OperacaoFinanceiraRepository : IOperacaoFinanceira
+    public class OperacaoFinanceiraRepository : IRepositoryBase<OperacaoFinanceira, int>
     {
         private readonly PoupaDevAPIContext _context;
 
@@ -17,9 +17,9 @@ namespace PoupaDevAPI.Repositories
             _context = context;
         }
 
-        public void Create(OperacaoFinanceira operacaoFinanceira)
+        public void CreateOrUpdate(OperacaoFinanceira operacaoFinanceira)
         {
-            _context.OperacoesFinanceiras.Add(operacaoFinanceira);
+            _context.Entry(operacaoFinanceira).State = operacaoFinanceira.Id == 0 ? EntityState.Added : EntityState.Modified;
             _context.SaveChanges();
         }
 
@@ -43,12 +43,6 @@ namespace PoupaDevAPI.Repositories
         public OperacaoFinanceira GetById(int id)
         {
             return _context.OperacoesFinanceiras.SingleOrDefault(p => p.Id == id);
-        }
-
-        public void Update(OperacaoFinanceira operacaoFinanceira)
-        {
-            _context.Entry(operacaoFinanceira).State = EntityState.Modified;
-            _context.SaveChanges();
-        }
+        }       
     }
 }

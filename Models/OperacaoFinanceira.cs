@@ -6,12 +6,13 @@ using PoupaDevAPI.Enums;
 
 namespace PoupaDevAPI.Models
 {
-    public class OperacaoFinanceira
+    public class OperacaoFinanceira : IEntity<int>
     {
-        public int Id { get; private set; }
-        public decimal Valor { get; private set; }
-        public TipoOperacao Tipo { get; private set; }
-        public DateTime DataOperacao { get; private set;}       
+        public int Id { get; set; }
+        public decimal Valor { get; set; }
+        public TipoOperacao Tipo { get; set; }
+        public DateTime DataOperacao { get; set;} 
+        public int ObjetivoFinanceiroId { get; set; }
 
         public OperacaoFinanceira(decimal valor, TipoOperacao tipo)
         {            
