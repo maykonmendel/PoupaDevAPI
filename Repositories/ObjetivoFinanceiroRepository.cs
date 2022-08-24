@@ -17,31 +17,47 @@ namespace PoupaDevAPI.Repositories
             _context = context;
         }
 
-        public void CreateOrUpdate(ObjetivoFinanceiro objetivoFinanceiro)
+        public async Task<ObjetivoFinanceiro> Create(ObjetivoFinanceiro objetivoFinanceiro)
         {
-            _context.Entry(objetivoFinanceiro).State = objetivoFinanceiro.Id == 0 ? EntityState.Added : EntityState.Modified;            
-            _context.SaveChanges();
+            _context.ObjetivosFinanceiros.Add(objetivoFinanceiro);
+            await _context.SaveChangesAsync();
+
+            return objetivoFinanceiro;
         }
 
-        public void Delete(int id)
+        public async Task<ObjetivoFinanceiro> Update(ObjetivoFinanceiro objetivoFinanceiro, int id) 
         {
-            var objetivoFinanceiro = _context.ObjetivosFinanceiros.SingleOrDefault(p => p.Id == id);
+            objetivoFinanceiro = _context.ObjetivosFinanceiros.FirstOrDefault(x => x.Id == id);
+
+            if(objetivoFinanceiro != null)
+            {
+                _context.Entry(objetivoFinanceiro).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+            }            
+
+            return objetivoFinanceiro;
+        }
+
+        public async Task Delete(int id)
+        {
+            var objetivoFinanceiro = await _context.ObjetivosFinanceiros.FirstOrDefaultAsync(p => p.Id == id);
 
             if(objetivoFinanceiro != null)
             {
                 _context.ObjetivosFinanceiros.Remove(objetivoFinanceiro);
-                _context.SaveChanges();
+
+                await _context.SaveChangesAsync();
             }
         }
 
-        public List<ObjetivoFinanceiro> GetAll()
+        public async Task<List<ObjetivoFinanceiro>> GetAll()
         {
-            return _context.ObjetivosFinanceiros.ToList();
+            return await _context.ObjetivosFinanceiros.ToListAsync();
         }
 
-        public ObjetivoFinanceiro GetById(int id)
+        public async Task<ObjetivoFinanceiro> GetById(int id)
         {
-            return _context.ObjetivosFinanceiros.SingleOrDefault(p => p.Id == id);            
+            return await _context.ObjetivosFinanceiros.SingleOrDefaultAsync(p => p.Id == id);            
         }        
     }
 }

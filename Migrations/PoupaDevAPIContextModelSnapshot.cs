@@ -39,7 +39,7 @@ namespace PoupaDevAPI.Migrations
                     b.Property<string>("Titulo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal?>("ValorObjetivo")
+                    b.Property<decimal>("ValorObjetivo")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");

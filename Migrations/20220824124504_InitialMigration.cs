@@ -17,7 +17,7 @@ namespace PoupaDevAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Titulo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Descricao = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ValorObjetivo = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    ValorObjetivo = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     DataCriacao = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>

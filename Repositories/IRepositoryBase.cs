@@ -8,9 +8,10 @@ namespace PoupaDevAPI.Repositories
 {
     public interface IRepositoryBase<TEntity, TKey> where TEntity : class, IEntity<TKey> where TKey : struct
     {
-        List<TEntity> GetAll();
-        TEntity GetById(TKey id);
-        void CreateOrUpdate(TEntity entity);        
-        void Delete(TKey id);
+        Task<List<TEntity>> GetAll();
+        Task<TEntity> GetById(TKey id);
+        Task<TEntity> Create(TEntity entity);
+        Task<TEntity> Update(TEntity entity, TKey id);
+        Task Delete(TKey id);
     }
 }

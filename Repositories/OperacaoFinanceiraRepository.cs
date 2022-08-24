@@ -17,32 +17,47 @@ namespace PoupaDevAPI.Repositories
             _context = context;
         }
 
-        public void CreateOrUpdate(OperacaoFinanceira operacaoFinanceira)
+        public async Task<OperacaoFinanceira> Create(OperacaoFinanceira operacaoFinanceira)
         {
-            _context.Entry(operacaoFinanceira).State = operacaoFinanceira.Id == 0 ? EntityState.Added : EntityState.Modified;
-            _context.SaveChanges();
+            _context.OperacoesFinanceiras.Add(operacaoFinanceira);
+            await _context.SaveChangesAsync();
+
+            return operacaoFinanceira;
         }
 
-        public void Delete(int id)
+        public async Task<OperacaoFinanceira> Update(OperacaoFinanceira operacaoFinanceira, int id)
         {
-            var operacaoFinanceira = _context.OperacoesFinanceiras.SingleOrDefault(p => p.Id == id);
+            operacaoFinanceira = _context.OperacoesFinanceiras.FirstOrDefault(p => p.Id == id);
+
+            if (operacaoFinanceira != null)
+            {
+                _context.Entry(operacaoFinanceira).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+            }
+           
+            return operacaoFinanceira;
+        }
+
+        public async Task Delete(int id)
+        {
+            var operacaoFinanceira = await _context.OperacoesFinanceiras.FirstOrDefaultAsync(p => p.Id == id);
 
             if (operacaoFinanceira != null)
             {
                 _context.OperacoesFinanceiras.Remove(operacaoFinanceira);
-                _context.SaveChanges();
-            }
+                await _context.SaveChangesAsync();
+            }            
         }
 
-        public List<OperacaoFinanceira> GetAll()
+        public async Task<List<OperacaoFinanceira>> GetAll()
         {
-            return _context.OperacoesFinanceiras.ToList();
+            return await _context.OperacoesFinanceiras.ToListAsync();
         }
         
 
-        public OperacaoFinanceira GetById(int id)
+        public async Task<OperacaoFinanceira> GetById(int id)
         {
-            return _context.OperacoesFinanceiras.SingleOrDefault(p => p.Id == id);
+            return await _context.OperacoesFinanceiras.SingleOrDefaultAsync(p => p.Id == id);
         }       
     }
 }
