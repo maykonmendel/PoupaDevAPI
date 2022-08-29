@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PoupaDevAPI.Context;
+using PoupaDevAPI.Exceptions;
 using PoupaDevAPI.Models;
 
 namespace PoupaDevAPI.Repositories
@@ -19,7 +20,13 @@ namespace PoupaDevAPI.Repositories
 
         public async Task<ObjetivoFinanceiro> Create(ObjetivoFinanceiro objetivoFinanceiro)
         {
-            _context.ObjetivosFinanceiros.Add(objetivoFinanceiro);
+            var objetivo = _context.ObjetivosFinanceiros.Add(objetivoFinanceiro);
+
+            if (objetivo.State != EntityState.Added)
+            {
+                throw new BadRequestException("Erro ao cadastrar um novo Objetivo Financeiro. Tente novamente.");
+            }
+
             await _context.SaveChangesAsync();
 
             return objetivoFinanceiro;
@@ -29,11 +36,13 @@ namespace PoupaDevAPI.Repositories
         {
             objetivoFinanceiro = _context.ObjetivosFinanceiros.FirstOrDefault(x => x.Id == id);
 
-            if(objetivoFinanceiro != null)
+            if(objetivoFinanceiro == null) 
             {
-                _context.Entry(objetivoFinanceiro).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
-            }            
+                throw new BadRequestException("Objetivo Financeiro não cadastrado!");
+            }
+
+            _context.Entry(objetivoFinanceiro).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
 
             return objetivoFinanceiro;
         }
@@ -42,22 +51,37 @@ namespace PoupaDevAPI.Repositories
         {
             var objetivoFinanceiro = await _context.ObjetivosFinanceiros.FirstOrDefaultAsync(p => p.Id == id);
 
-            if(objetivoFinanceiro != null)
+            if (objetivoFinanceiro == null)
             {
-                _context.ObjetivosFinanceiros.Remove(objetivoFinanceiro);
-
-                await _context.SaveChangesAsync();
+                throw new BadRequestException("Objetivo Financeiro não cadastrado!");
             }
+
+            _context.ObjetivosFinanceiros.Remove(objetivoFinanceiro);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<List<ObjetivoFinanceiro>> GetAll()
         {
-            return await _context.ObjetivosFinanceiros.ToListAsync();
+            var listObjetivosFinanceiros = _context.ObjetivosFinanceiros.ToListAsync();
+
+            if(listObjetivosFinanceiros == null)
+            {
+                throw new BadRequestException("Não há resultado a ser exibido!");
+            }
+
+            return await listObjetivosFinanceiros;
         }
 
         public async Task<ObjetivoFinanceiro> GetById(int id)
         {
-            return await _context.ObjetivosFinanceiros.SingleOrDefaultAsync(p => p.Id == id);            
+            var objetivoFinanceiro = _context.ObjetivosFinanceiros.SingleOrDefaultAsync(p => p.Id == id);
+
+            if (objetivoFinanceiro == null)
+            {
+                throw new BadRequestException("Objetivo Financeiro não cadastrado!");
+            }
+
+            return await objetivoFinanceiro;            
         }        
     }
 }
