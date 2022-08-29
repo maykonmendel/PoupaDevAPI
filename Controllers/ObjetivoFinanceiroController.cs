@@ -23,7 +23,7 @@ namespace PoupaDevAPI.Controllers
         public async Task<ActionResult<ObjetivoFinanceiro>> GetAll()
         {
             var listaObjetivosFinanceiros = await _repository.GetAll();
-            return Ok(listaObjetivosFinanceiros);            
+            return Ok(listaObjetivosFinanceiros);
         }
 
         //GET: api/objetivoFinanceiro/{id} 
