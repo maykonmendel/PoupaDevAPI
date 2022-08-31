@@ -34,7 +34,7 @@ namespace PoupaDevAPI.Repositories
 
         public async Task<ObjetivoFinanceiro> Update(ObjetivoFinanceiro objetivoFinanceiro, int id) 
         {
-            objetivoFinanceiro = _context.ObjetivosFinanceiros.FirstOrDefault(x => x.Id == id);
+            objetivoFinanceiro = _context.ObjetivosFinanceiros.IgnoreQueryFilters().AsNoTracking().FirstOrDefault(x => x.Id == id);
 
             if(objetivoFinanceiro == null) 
             {
@@ -49,20 +49,24 @@ namespace PoupaDevAPI.Repositories
 
         public async Task Delete(int id)
         {
-            var objetivoFinanceiro = await _context.ObjetivosFinanceiros.FirstOrDefaultAsync(p => p.Id == id);
+            var objetivoFinanceiro = await _context.ObjetivosFinanceiros.IgnoreQueryFilters().AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
 
             if (objetivoFinanceiro == null)
             {
                 throw new BadRequestException("Objetivo Financeiro não cadastrado!");
             }
 
-            _context.ObjetivosFinanceiros.Remove(objetivoFinanceiro);
-            await _context.SaveChangesAsync();
+            if(objetivoFinanceiro.EstaDeletado != true) 
+            {
+                objetivoFinanceiro.EstaDeletado = true;
+                _context.Entry(objetivoFinanceiro).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+            }            
         }
 
         public async Task<List<ObjetivoFinanceiro>> GetAll()
         {
-            var listObjetivosFinanceiros = _context.ObjetivosFinanceiros.ToListAsync();
+            var listObjetivosFinanceiros = _context.ObjetivosFinanceiros.IgnoreQueryFilters().AsNoTracking().ToListAsync();
 
             if(listObjetivosFinanceiros == null)
             {
@@ -74,7 +78,7 @@ namespace PoupaDevAPI.Repositories
 
         public async Task<ObjetivoFinanceiro> GetById(int id)
         {
-            var objetivoFinanceiro = _context.ObjetivosFinanceiros.SingleOrDefaultAsync(p => p.Id == id);
+            var objetivoFinanceiro = _context.ObjetivosFinanceiros.IgnoreQueryFilters().AsNoTracking().SingleOrDefaultAsync(p => p.Id == id);
 
             if (objetivoFinanceiro == null)
             {

@@ -36,6 +36,9 @@ namespace PoupaDevAPI.Migrations
                     b.Property<string>("Descricao")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("EstaDeletado")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Titulo")
                         .HasColumnType("nvarchar(max)");
 
@@ -57,6 +60,9 @@ namespace PoupaDevAPI.Migrations
 
                     b.Property<DateTime>("DataOperacao")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("EstaDeletado")
+                        .HasColumnType("bit");
 
                     b.Property<int>("ObjetivoFinanceiroId")
                         .HasColumnType("int");

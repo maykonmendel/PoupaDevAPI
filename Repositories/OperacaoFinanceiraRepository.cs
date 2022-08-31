@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PoupaDevAPI.Context;
+using PoupaDevAPI.Exceptions;
 using PoupaDevAPI.Models;
 
 namespace PoupaDevAPI.Repositories
@@ -19,6 +20,13 @@ namespace PoupaDevAPI.Repositories
 
         public async Task<OperacaoFinanceira> Create(OperacaoFinanceira operacaoFinanceira)
         {
+            var operacao = _context.OperacoesFinanceiras.Add(operacaoFinanceira);
+
+            if (operacao.State != EntityState.Added)
+            {
+                throw new BadRequestException("Erro ao cadastrar uma nova Operação Financeira. Tente novamente.");
+            }
+
             _context.OperacoesFinanceiras.Add(operacaoFinanceira);
             await _context.SaveChangesAsync();
 
@@ -27,37 +35,54 @@ namespace PoupaDevAPI.Repositories
 
         public async Task<OperacaoFinanceira> Update(OperacaoFinanceira operacaoFinanceira, int id)
         {
-            operacaoFinanceira = _context.OperacoesFinanceiras.FirstOrDefault(p => p.Id == id);
+            operacaoFinanceira = await _context.OperacoesFinanceiras.IgnoreQueryFilters().AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
 
-            if (operacaoFinanceira != null)
+            if (operacaoFinanceira == null)
             {
-                _context.Entry(operacaoFinanceira).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
+                throw new BadRequestException("Operação Financeira não cadastrada!");
             }
-           
+
+            _context.Entry(operacaoFinanceira).State = EntityState.Modified;
+            await _context.SaveChangesAsync();           
             return operacaoFinanceira;
         }
 
         public async Task Delete(int id)
         {
-            var operacaoFinanceira = await _context.OperacoesFinanceiras.FirstOrDefaultAsync(p => p.Id == id);
+            var operacaoFinanceira = await _context.OperacoesFinanceiras.IgnoreQueryFilters().AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
 
-            if (operacaoFinanceira != null)
+            if (operacaoFinanceira == null)
             {
-                _context.OperacoesFinanceiras.Remove(operacaoFinanceira);
-                await _context.SaveChangesAsync();
-            }            
+                throw new BadRequestException("Operação Financeira não cadastrado!");
+            }
+
+            _context.OperacoesFinanceiras.Remove(operacaoFinanceira);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<List<OperacaoFinanceira>> GetAll()
         {
-            return await _context.OperacoesFinanceiras.ToListAsync();
+            var listOperacoesFinanceiras = _context.OperacoesFinanceiras.IgnoreQueryFilters().AsNoTracking().ToListAsync();
+
+            if (listOperacoesFinanceiras == null)
+            {
+                throw new BadRequestException("Não há resultado a ser exibido!");
+            }
+
+            return await listOperacoesFinanceiras;
         }
         
 
         public async Task<OperacaoFinanceira> GetById(int id)
         {
-            return await _context.OperacoesFinanceiras.SingleOrDefaultAsync(p => p.Id == id);
+            var operacaoFinanceira = _context.OperacoesFinanceiras.IgnoreQueryFilters().AsNoTracking().SingleOrDefaultAsync(p => p.Id == id);
+
+            if (operacaoFinanceira == null)
+            {
+                throw new BadRequestException("Operação Financeira não cadastrada!");
+            }
+
+            return await operacaoFinanceira;
         }       
     }
 }

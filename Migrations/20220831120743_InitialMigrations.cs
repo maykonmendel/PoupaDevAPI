@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PoupaDevAPI.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class InitialMigrations : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,7 +18,8 @@ namespace PoupaDevAPI.Migrations
                     Titulo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Descricao = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ValorObjetivo = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    DataCriacao = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DataCriacao = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EstaDeletado = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -34,7 +35,8 @@ namespace PoupaDevAPI.Migrations
                     Valor = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Tipo = table.Column<int>(type: "int", nullable: false),
                     DataOperacao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ObjetivoFinanceiroId = table.Column<int>(type: "int", nullable: false)
+                    ObjetivoFinanceiroId = table.Column<int>(type: "int", nullable: false),
+                    EstaDeletado = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

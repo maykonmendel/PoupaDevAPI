@@ -13,5 +13,11 @@ namespace PoupaDevAPI.Context
 
         public DbSet<ObjetivoFinanceiro> ObjetivosFinanceiros { get; set; }
         public DbSet<OperacaoFinanceira> OperacoesFinanceiras { get; set; }        
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder) 
+        {
+            modelBuilder.Entity<ObjetivoFinanceiro>().HasQueryFilter(x => !x.EstaDeletado);
+            modelBuilder.Entity<OperacaoFinanceira>().HasQueryFilter(x => !x.EstaDeletado);
+        }
     }
 }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "iDTAKZMK2g/tmtD6bgSquJDroADlcS6A1va09KQgKFxE19s4cMzA2djyu3JvcjliGpxzBVrj5qX98zmIHqlJhg==",
+  "dgSpecHash": "+XTnumqst/wDQ4jqMDlq7o3sXhjjSy1xcJ2wZNx9KYCEgle4zJJ5ie862IUr+l4oi+pE4NWCz0gArTUvqCCkhQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\mayko\\Documents\\Dev\\maykonmendel\\PoupaDevAPI\\PoupaDevAPI.csproj",
+  "projectFilePath": "C:\\Users\\mayko\\Documents\\Maykon Mendel\\Dev\\maykonmendel\\PoupaDevAPI\\PoupaDevAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mayko\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\mayko\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",

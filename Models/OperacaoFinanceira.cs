@@ -13,6 +13,7 @@ namespace PoupaDevAPI.Models
         public TipoOperacao Tipo { get; set; }
         public DateTime DataOperacao { get; set;} 
         public int ObjetivoFinanceiroId { get; set; }
+        public bool EstaDeletado { get; set; }
 
         public OperacaoFinanceira(decimal valor, TipoOperacao tipo)
         {            

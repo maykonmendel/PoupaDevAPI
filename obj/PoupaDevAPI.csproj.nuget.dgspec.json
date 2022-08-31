@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\mayko\\Documents\\Dev\\maykonmendel\\PoupaDevAPI\\PoupaDevAPI.csproj": {}
+    "C:\\Users\\mayko\\Documents\\Maykon Mendel\\Dev\\maykonmendel\\PoupaDevAPI\\PoupaDevAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\mayko\\Documents\\Dev\\maykonmendel\\PoupaDevAPI\\PoupaDevAPI.csproj": {
+    "C:\\Users\\mayko\\Documents\\Maykon Mendel\\Dev\\maykonmendel\\PoupaDevAPI\\PoupaDevAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mayko\\Documents\\Dev\\maykonmendel\\PoupaDevAPI\\PoupaDevAPI.csproj",
+        "projectUniqueName": "C:\\Users\\mayko\\Documents\\Maykon Mendel\\Dev\\maykonmendel\\PoupaDevAPI\\PoupaDevAPI.csproj",
         "projectName": "PoupaDevAPI",
-        "projectPath": "C:\\Users\\mayko\\Documents\\Dev\\maykonmendel\\PoupaDevAPI\\PoupaDevAPI.csproj",
+        "projectPath": "C:\\Users\\mayko\\Documents\\Maykon Mendel\\Dev\\maykonmendel\\PoupaDevAPI\\PoupaDevAPI.csproj",
         "packagesPath": "C:\\Users\\mayko\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mayko\\Documents\\Dev\\maykonmendel\\PoupaDevAPI\\obj\\",
+        "outputPath": "C:\\Users\\mayko\\Documents\\Maykon Mendel\\Dev\\maykonmendel\\PoupaDevAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

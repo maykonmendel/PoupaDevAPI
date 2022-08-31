@@ -49,5 +49,13 @@ namespace PoupaDevAPI.Controllers
             objetivoFinanceiro = await _repository.Update(objetivoFinanceiro, id);
             return Ok();
         }
+
+        //DELETE: api/objetivoFinanceiro/{id}
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            await _repository.Delete(id);
+            return Ok();
+        }
     }
 }
