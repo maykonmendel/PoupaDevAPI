@@ -35,7 +35,7 @@ namespace PoupaDevAPI.Repositories
 
         public async Task<OperacaoFinanceira> Update(OperacaoFinanceira operacaoFinanceira, int id)
         {
-            operacaoFinanceira = await _context.OperacoesFinanceiras.IgnoreQueryFilters().AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
+            operacaoFinanceira = await _context.OperacoesFinanceiras.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
 
             if (operacaoFinanceira == null)
             {
@@ -49,15 +49,19 @@ namespace PoupaDevAPI.Repositories
 
         public async Task Delete(int id)
         {
-            var operacaoFinanceira = await _context.OperacoesFinanceiras.IgnoreQueryFilters().AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
+            var operacaoFinanceira = await _context.OperacoesFinanceiras.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
 
             if (operacaoFinanceira == null)
             {
                 throw new BadRequestException("Operação Financeira não cadastrado!");
             }
 
-            _context.OperacoesFinanceiras.Remove(operacaoFinanceira);
-            await _context.SaveChangesAsync();
+            if (operacaoFinanceira.EstaDeletado != true)
+            {
+                operacaoFinanceira.EstaDeletado = true;
+                _context.Entry(operacaoFinanceira).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task<List<OperacaoFinanceira>> GetAll()
@@ -66,7 +70,7 @@ namespace PoupaDevAPI.Repositories
 
             if (listOperacoesFinanceiras == null)
             {
-                throw new BadRequestException("Não há resultado a ser exibido!");
+                throw new NotFoundException("Não há resultado a ser exibido!");
             }
 
             return await listOperacoesFinanceiras;
@@ -79,7 +83,7 @@ namespace PoupaDevAPI.Repositories
 
             if (operacaoFinanceira == null)
             {
-                throw new BadRequestException("Operação Financeira não cadastrada!");
+                throw new NotFoundException("Operação Financeira não cadastrada!");
             }
 
             return await operacaoFinanceira;

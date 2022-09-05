@@ -49,7 +49,7 @@ namespace PoupaDevAPI.Repositories
 
         public async Task Delete(int id)
         {
-            var objetivoFinanceiro = await _context.ObjetivosFinanceiros.IgnoreQueryFilters().AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
+            var objetivoFinanceiro = await _context.ObjetivosFinanceiros.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
 
             if (objetivoFinanceiro == null)
             {
@@ -70,7 +70,7 @@ namespace PoupaDevAPI.Repositories
 
             if(listObjetivosFinanceiros == null)
             {
-                throw new BadRequestException("Não há resultado a ser exibido!");
+                throw new NotFoundException("Não há resultado a ser exibido!");
             }
 
             return await listObjetivosFinanceiros;
@@ -82,7 +82,7 @@ namespace PoupaDevAPI.Repositories
 
             if (objetivoFinanceiro == null)
             {
-                throw new BadRequestException("Objetivo Financeiro não cadastrado!");
+                throw new NotFoundException("Objetivo Financeiro não cadastrado!");
             }
 
             return await objetivoFinanceiro;            
