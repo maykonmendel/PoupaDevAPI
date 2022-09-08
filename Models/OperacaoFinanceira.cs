@@ -6,9 +6,8 @@ using PoupaDevAPI.Enums;
 
 namespace PoupaDevAPI.Models
 {
-    public class OperacaoFinanceira : IEntity<int>
-    {
-        public int Id { get; set; }
+    public class OperacaoFinanceira : Entity<int>
+    {        
         public decimal Valor { get; set; }
         public TipoOperacao Tipo { get; set; }
         public DateTime DataOperacao { get; set;} 
@@ -19,7 +18,8 @@ namespace PoupaDevAPI.Models
         {            
             Valor = valor;
             Tipo = tipo;
-            DataOperacao = DateTime.Now;            
+            DataOperacao = DateTime.Now;
+            EstaDeletado = false;
         }
 
     }

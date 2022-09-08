@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace PoupaDevAPI.Models
 {
-    public interface IEntity<TPrimaryKey> where TPrimaryKey : struct
+    public abstract class Entity<TPrimaryKey> where TPrimaryKey : struct
     {
-        TPrimaryKey Id { get; set; }
+        public TPrimaryKey Id { get; set; }        
     }
 }

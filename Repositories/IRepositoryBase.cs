@@ -6,7 +6,7 @@ using PoupaDevAPI.Models;
 
 namespace PoupaDevAPI.Repositories
 {
-    public interface IRepositoryBase<TEntity, TKey> where TEntity : class, IEntity<TKey> where TKey : struct
+    public interface IRepositoryBase<TEntity, TKey> where TEntity : class
     {
         Task<List<TEntity>> GetAll();
         Task<TEntity> GetById(TKey id);

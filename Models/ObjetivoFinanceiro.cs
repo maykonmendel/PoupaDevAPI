@@ -5,15 +5,15 @@ using System.Threading.Tasks;
 
 namespace PoupaDevAPI.Models
 {
-    public class ObjetivoFinanceiro : IEntity<int>
-    {
-        public int Id { get; set; }
+    public class ObjetivoFinanceiro : Entity<int>
+    {        
         public string Titulo { get; set; }
         public string Descricao { get; set; }
         public decimal ValorObjetivo { get; set; }
         public DateTime DataCriacao { get; set; }
         public List<OperacaoFinanceira> ListaOperacoes { get; set; }
-        public bool EstaDeletado { get; set; }
+        public ContaObjetivo Conta { get; set; }
+        public bool EstaDeletado { get; set; }   
 
         public ObjetivoFinanceiro(string titulo, string descricao, decimal valorObjetivo)
         {            
@@ -21,7 +21,8 @@ namespace PoupaDevAPI.Models
             Descricao = descricao;
             ValorObjetivo = valorObjetivo;
             DataCriacao = DateTime.Now;
-            ListaOperacoes = new List<OperacaoFinanceira>();            
+            ListaOperacoes = new List<OperacaoFinanceira>();
+            EstaDeletado = false;           
         }
     }
 }
