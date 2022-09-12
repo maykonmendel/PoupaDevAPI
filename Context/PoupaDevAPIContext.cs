@@ -19,6 +19,7 @@ namespace PoupaDevAPI.Context
         {
             modelBuilder.Entity<ObjetivoFinanceiro>().HasQueryFilter(x => !x.EstaDeletado);
             modelBuilder.Entity<OperacaoFinanceira>().HasQueryFilter(x => !x.EstaDeletado);
+            modelBuilder.Entity<ContaObjetivo>().HasQueryFilter(x => !x.EstaDeletado);
         }
     }
 }

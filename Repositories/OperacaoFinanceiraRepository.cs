@@ -47,6 +47,18 @@ namespace PoupaDevAPI.Repositories
             return operacaoFinanceira;
         }
 
+        public async Task<List<OperacaoFinanceira>> GetDeleted()
+        {
+            var listaOperacoesDeletadas = _context.OperacoesFinanceiras.Where(x => x.EstaDeletado == true).ToListAsync();
+
+            if (listaOperacoesDeletadas == null)
+            {
+                throw new NotFoundException("Não há resultado a ser exibido!");
+            }
+
+            return await listaOperacoesDeletadas;
+        }
+
         public async Task Delete(int id)
         {
             var operacaoFinanceira = await _context.OperacoesFinanceiras.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
@@ -74,8 +86,7 @@ namespace PoupaDevAPI.Repositories
             }
 
             return await listOperacoesFinanceiras;
-        }
-        
+        }        
 
         public async Task<OperacaoFinanceira> GetById(int id)
         {

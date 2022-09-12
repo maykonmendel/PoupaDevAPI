@@ -34,7 +34,7 @@ namespace PoupaDevAPI.Repositories
 
         public async Task<ObjetivoFinanceiro> Update(ObjetivoFinanceiro objetivoFinanceiro, int id) 
         {
-            objetivoFinanceiro = _context.ObjetivosFinanceiros.IgnoreQueryFilters().AsNoTracking().FirstOrDefault(x => x.Id == id);
+            objetivoFinanceiro = _context.ObjetivosFinanceiros.AsNoTracking().FirstOrDefault(x => x.Id == id);
 
             if(objetivoFinanceiro == null) 
             {
@@ -64,9 +64,21 @@ namespace PoupaDevAPI.Repositories
             }            
         }
 
+        public async Task<List<ObjetivoFinanceiro>> GetDeleted()
+        {
+            var listaObjetivosDeletados = _context.ObjetivosFinanceiros.Where(x => x.EstaDeletado == true).ToListAsync();
+
+            if (listaObjetivosDeletados == null)
+            {
+                throw new NotFoundException("Não há resultado a ser exibido!");
+            }
+
+            return await listaObjetivosDeletados;
+        }
+
         public async Task<List<ObjetivoFinanceiro>> GetAll()
         {
-            var listObjetivosFinanceiros = _context.ObjetivosFinanceiros.IgnoreQueryFilters().AsNoTracking().ToListAsync();
+            var listObjetivosFinanceiros = _context.ObjetivosFinanceiros.AsNoTracking().ToListAsync();
 
             if(listObjetivosFinanceiros == null)
             {
@@ -78,7 +90,7 @@ namespace PoupaDevAPI.Repositories
 
         public async Task<ObjetivoFinanceiro> GetById(int id)
         {
-            var objetivoFinanceiro = _context.ObjetivosFinanceiros.IgnoreQueryFilters().AsNoTracking().SingleOrDefaultAsync(p => p.Id == id);
+            var objetivoFinanceiro = _context.ObjetivosFinanceiros.AsNoTracking().SingleOrDefaultAsync(p => p.Id == id);
 
             if (objetivoFinanceiro == null)
             {

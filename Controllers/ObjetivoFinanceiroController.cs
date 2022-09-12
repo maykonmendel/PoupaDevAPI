@@ -24,7 +24,7 @@ namespace PoupaDevAPI.Controllers
         {
             var listaObjetivosFinanceiros = await _repository.GetAll();
             return Ok(listaObjetivosFinanceiros);
-        }
+        }        
 
         //GET: api/objetivoFinanceiro/{id} 
         [HttpGet("{id}")]

@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using PoupaDevAPI.Context;
+using PoupaDevAPI.Middleware;
 using PoupaDevAPI.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,7 @@ var connectionString = builder.Configuration.GetConnectionString("PoupaDevApiCon
 builder.Services.AddDbContext<PoupaDevAPIContext>(o => o.UseSqlServer(connectionString));
 builder.Services.AddScoped<ObjetivoFinanceiroRepository>();
 builder.Services.AddScoped<OperacaoFinanceiraRepository>();
+builder.Services.AddScoped<ContaObjetivoRepository>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -45,6 +47,8 @@ UpdateDatabase(app);
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseMiddleware(typeof(ErrorHandlingMiddleware));
 
 app.MapControllers();
 

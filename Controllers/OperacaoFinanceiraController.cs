@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using PoupaDevAPI.Enums;
 using PoupaDevAPI.Models;
 using PoupaDevAPI.Repositories;
 
@@ -11,7 +12,7 @@ namespace PoupaDevAPI.Controllers
     [Route("operacaofinanceira")]
     public class OperacaoFinanceiraController : Controller
     {
-        private readonly OperacaoFinanceiraRepository _repository;
+        private readonly OperacaoFinanceiraRepository _repository;        
 
         public OperacaoFinanceiraController(OperacaoFinanceiraRepository repository)
         {
@@ -25,7 +26,7 @@ namespace PoupaDevAPI.Controllers
             var listaOperacoesFinanceiras = await _repository.GetAll();
             return Ok(listaOperacoesFinanceiras);
         }
-
+                
         //GET: api/operacaoFinanceira/{id} 
         [HttpGet("{id}")]
         public async Task<ActionResult<OperacaoFinanceira>> GetById(int id)
