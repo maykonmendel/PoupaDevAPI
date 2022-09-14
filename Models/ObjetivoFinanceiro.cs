@@ -10,8 +10,7 @@ namespace PoupaDevAPI.Models
         public string Titulo { get; set; }
         public string Descricao { get; set; }
         public decimal ValorObjetivo { get; set; }
-        public DateTime DataCriacao { get; set; }
-        public List<OperacaoFinanceira> ListaOperacoes { get; set; }
+        public DateTime DataCriacao { get; set; }        
         public ContaObjetivo Conta { get; set; }
         public bool EstaDeletado { get; set; }   
 
@@ -21,8 +20,7 @@ namespace PoupaDevAPI.Models
             Descricao = descricao;
             ValorObjetivo = valorObjetivo;
             DataCriacao = DateTime.Now;
-            ListaOperacoes = new List<OperacaoFinanceira>();
-            EstaDeletado = false;           
+            EstaDeletado = false;            
         }
     }
 }

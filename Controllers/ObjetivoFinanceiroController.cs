@@ -11,11 +11,11 @@ namespace PoupaDevAPI.Controllers
     [Route("objetivofinanceiro")]
     public class ObjetivoFinanceiroController : Controller
     {
-        private readonly ObjetivoFinanceiroRepository _repository;
+        private readonly ObjetivoFinanceiroRepository _repository;       
 
         public ObjetivoFinanceiroController(ObjetivoFinanceiroRepository repository)
         {
-            _repository = repository;
+            _repository = repository;            
         }
 
         //GET: api/objetivoFinanceiro
@@ -38,7 +38,7 @@ namespace PoupaDevAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<ObjetivoFinanceiro>> Create([FromBody]ObjetivoFinanceiro objetivoFinanceiro)
         {
-            objetivoFinanceiro = await _repository.Create(objetivoFinanceiro);
+            objetivoFinanceiro = await _repository.Create(objetivoFinanceiro);            
             return Ok();
         }
 

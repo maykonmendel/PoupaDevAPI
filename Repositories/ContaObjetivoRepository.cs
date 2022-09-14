@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PoupaDevAPI.Context;
+using PoupaDevAPI.Enums;
 using PoupaDevAPI.Exceptions;
 using PoupaDevAPI.Models;
 
@@ -34,17 +35,30 @@ namespace PoupaDevAPI.Repositories
 
         public async Task<ContaObjetivo> Update(ContaObjetivo contaObjetivo, int id)
         {
-            contaObjetivo = _context.ContasObjetivos.AsNoTracking().FirstOrDefault(x => x.Id == id);
+            var contaObjetivoDb = _context.ContasObjetivos.AsNoTracking().FirstOrDefault(x => x.Id == id);
 
-            if (contaObjetivo == null)
+            if (contaObjetivoDb == null)
             {
                 throw new BadRequestException("Conta não cadastrada!");
-            }            
+            }
 
-            _context.Entry(contaObjetivo).State = EntityState.Modified;
+            contaObjetivoDb.SaldoAnterior = contaObjetivo.SaldoAnterior + contaObjetivo.SaldoAtual;
+
+            var operacaoFinanceira = _context.OperacoesFinanceiras.FirstOrDefault(x => x.Id == contaObjetivo.Id);
+
+            if(operacaoFinanceira.Tipo == TipoOperacao.Saque)
+            {
+                contaObjetivoDb.SaldoAtual = contaObjetivo.SaldoAnterior - operacaoFinanceira.Valor;
+            }
+
+            if(operacaoFinanceira.Tipo == TipoOperacao.Deposito) {
+                contaObjetivoDb.SaldoAtual = contaObjetivo.SaldoAnterior + operacaoFinanceira.Valor;
+            }          
+
+            _context.Entry(contaObjetivoDb).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
-            return contaObjetivo;
+            return contaObjetivoDb;
         }
 
         public async Task Delete(int id)

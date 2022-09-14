@@ -78,7 +78,7 @@ namespace PoupaDevAPI.Repositories
 
         public async Task<List<OperacaoFinanceira>> GetAll()
         {
-            var listOperacoesFinanceiras = _context.OperacoesFinanceiras.IgnoreQueryFilters().AsNoTracking().ToListAsync();
+            var listOperacoesFinanceiras = _context.OperacoesFinanceiras.Include(conta => conta.ContaObjetivoId).AsNoTracking().ToListAsync();
 
             if (listOperacoesFinanceiras == null)
             {
@@ -90,7 +90,7 @@ namespace PoupaDevAPI.Repositories
 
         public async Task<OperacaoFinanceira> GetById(int id)
         {
-            var operacaoFinanceira = _context.OperacoesFinanceiras.IgnoreQueryFilters().AsNoTracking().SingleOrDefaultAsync(p => p.Id == id);
+            var operacaoFinanceira = _context.OperacoesFinanceiras.Include(conta => conta.ContaObjetivoId).AsNoTracking().SingleOrDefaultAsync(p => p.Id == id);
 
             if (operacaoFinanceira == null)
             {

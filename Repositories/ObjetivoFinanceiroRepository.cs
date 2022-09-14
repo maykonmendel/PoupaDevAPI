@@ -78,7 +78,7 @@ namespace PoupaDevAPI.Repositories
 
         public async Task<List<ObjetivoFinanceiro>> GetAll()
         {
-            var listObjetivosFinanceiros = _context.ObjetivosFinanceiros.AsNoTracking().ToListAsync();
+            var listObjetivosFinanceiros = _context.ObjetivosFinanceiros.Include(objetivo => objetivo.Conta).AsNoTracking().ToListAsync();
 
             if(listObjetivosFinanceiros == null)
             {
@@ -90,7 +90,7 @@ namespace PoupaDevAPI.Repositories
 
         public async Task<ObjetivoFinanceiro> GetById(int id)
         {
-            var objetivoFinanceiro = _context.ObjetivosFinanceiros.AsNoTracking().SingleOrDefaultAsync(p => p.Id == id);
+            var objetivoFinanceiro = _context.ObjetivosFinanceiros.Include(objetivo => objetivo.Conta).AsNoTracking().SingleOrDefaultAsync(p => p.Id == id);
 
             if (objetivoFinanceiro == null)
             {
