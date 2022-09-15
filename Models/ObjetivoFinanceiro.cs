@@ -9,12 +9,12 @@ namespace PoupaDevAPI.Models
     {        
         public string Titulo { get; set; }
         public string Descricao { get; set; }
-        public decimal ValorObjetivo { get; set; }
+        public float ValorObjetivo { get; set; }
         public DateTime DataCriacao { get; set; }        
         public ContaObjetivo Conta { get; set; }
         public bool EstaDeletado { get; set; }   
 
-        public ObjetivoFinanceiro(string titulo, string descricao, decimal valorObjetivo)
+        public ObjetivoFinanceiro(string titulo, string descricao, float valorObjetivo)
         {            
             Titulo = titulo;
             Descricao = descricao;

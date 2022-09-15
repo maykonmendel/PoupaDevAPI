@@ -8,14 +8,14 @@ namespace PoupaDevAPI.Models
 {
     public class OperacaoFinanceira : Entity<int>
     {        
-        public decimal Valor { get; set; }
+        public float Valor { get; set; }
         public TipoOperacao Tipo { get; set; }
         public DateTime DataOperacao { get; set;} 
         public bool EstaDeletado { get; set; }
         public int ContaObjetivoId { get; set; }
         public ContaObjetivo ContaObjetivo { get; set; }
 
-        public OperacaoFinanceira(decimal valor, TipoOperacao tipo, int contaObjetivoId)
+        public OperacaoFinanceira(float valor, TipoOperacao tipo, int contaObjetivoId)
         {            
             Valor = valor;
             Tipo = tipo;
